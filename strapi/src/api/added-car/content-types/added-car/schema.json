@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "added_cars",
+  "info": {
+    "singularName": "added-car",
+    "pluralName": "added-cars",
+    "displayName": "added-car"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "integer"
+    },
+    "total_trips": {
+      "type": "integer"
+    },
+    "reviews": {
+      "type": "integer"
+    },
+    "citys": {
+      "type": "json"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "cars"
+    }
+  }
+}
