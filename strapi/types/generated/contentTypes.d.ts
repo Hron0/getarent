@@ -401,6 +401,36 @@ export interface ApiAddedCarAddedCar extends Schema.CollectionType {
   };
 }
 
+export interface ApiTestingTesting extends Schema.CollectionType {
+  collectionName: 'testings';
+  info: {
+    singularName: 'testing';
+    pluralName: 'testings';
+    displayName: 'Testing';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    labels: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::testing.testing',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::testing.testing',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -731,6 +761,7 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::added-car.added-car': ApiAddedCarAddedCar;
+      'api::testing.testing': ApiTestingTesting;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;

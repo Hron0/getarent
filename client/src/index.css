@@ -8,14 +8,17 @@
 }
 
 #root {
-  width: 100vw;
   position: relative;
   padding-bottom: 50px;
+  width: 85%;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 body {
   width: 100vw;
-  height: 100vh;
+  height: 1500px;
   display: flex;
   position: relative;
   flex-direction: column;
