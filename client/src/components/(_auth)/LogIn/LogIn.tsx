@@ -11,7 +11,7 @@ import logo from "../../../assets/logo.svg"
 
 const LogIn = () => {
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const signIn = useSignIn()
   const navigate = useNavigate()
 
@@ -29,7 +29,7 @@ const LogIn = () => {
         )
 
         setLoading(false)
-        console.log(response)
+        console.log(response.data.jwt)
 
         signIn({
           token: response.data.jwt,
@@ -67,7 +67,7 @@ const LogIn = () => {
   });
 
   return (
-    <div className='w-full relative flex justify-center mt-10'>
+    <div className='w-full relative flex justify-center mt-12'>
       <form
         onSubmit={formik.handleSubmit}
         className='bg-black w-[98%] sm:w-[90%] xl:w-[55%] py-16 rounded-xl flex flex-col items-center gap-12 relative'
