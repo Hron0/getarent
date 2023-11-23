@@ -11,7 +11,7 @@ import logo from "../../../assets/logo.svg"
 
 const LogIn = () => {
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const signIn = useSignIn()
   const navigate = useNavigate()
 
@@ -32,7 +32,7 @@ const LogIn = () => {
         console.log(response)
 
         signIn({
-          token: response.data.token,
+          token: response.data.jwt,
           expiresIn: 3600,
           tokenType: "Bearer",
           authState: { email: values.email },
