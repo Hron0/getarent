@@ -29,13 +29,16 @@ const LogIn = () => {
         )
 
         setLoading(false)
-        console.log(response.data.jwt)
+        console.log(response)
 
         signIn({
           token: response.data.jwt,
           expiresIn: 3600,
           tokenType: "Bearer",
-          authState: { email: values.email },
+          authState: { 
+            email: response.data.user.email,
+            name: response.data.user.username,
+           },
         });
 
         alert("Вы вошли в аккаунт... Переходим на главную страницу...")

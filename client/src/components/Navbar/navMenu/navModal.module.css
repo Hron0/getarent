@@ -1,0 +1,33 @@
+
+.modalBg{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s cubic-bezier(1, 0.08, 1, 0.77);
+    @apply flex flex-col items-end
+}
+
+.modalBgActive{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modalContent{
+    @apply flex flex-col items-start bg-white h-[100vh] w-[55vw] rounded-sm px-[10px] py-[15px];
+    position: fixed;
+    right: -1000px;
+    pointer-events: none;
+    transition: 0.4s cubic-bezier(0.57, 0.27, 0.27, 0.99);
+    z-index: 110;
+}
+
+.modalContentActive{
+    right: 0px;
+    pointer-events: all;
+}

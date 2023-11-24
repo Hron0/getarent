@@ -70,6 +70,13 @@
       "relation": "oneToMany",
       "target": "api::added-car.added-car",
       "mappedBy": "user"
+    },
+    "pfp": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

@@ -5,7 +5,8 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import LogIn from './components/(_auth)/LogIn/LogIn.tsx'
 import Register from './components/(_auth)/Register/Register.tsx'
-import { AuthProvider } from 'react-auth-kit';
+import { AuthProvider, RequireAuth } from 'react-auth-kit';
+import Profile from './components/profile/Profile.tsx';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,14 @@ const router = createBrowserRouter([
     path: '/register',
     element: <Register />
   },
+  {
+    path: '/profile',
+    element: (
+      <RequireAuth loginPath={"/login"}>
+        <Profile />
+      </RequireAuth>
+    )
+  }
   /*{
     path: "/blog",
     element: <Deck />

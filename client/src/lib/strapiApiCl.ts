@@ -1,4 +1,4 @@
-/* import axios from "axios";
+import axios from "axios";
 import { config } from "dotenv";
 import 'dotenv/config'
 config()
@@ -19,4 +19,4 @@ export const setAuthToken = (token: string | null) => {
     }
 }
 
-export default strapiApiClient */
+export default strapiApiClient
