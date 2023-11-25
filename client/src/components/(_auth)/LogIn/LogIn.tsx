@@ -8,10 +8,13 @@ import { useSignIn } from 'react-auth-kit'
 import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineLoading } from "react-icons/ai";
 import logo from "../../../assets/logo.svg"
+import { DialogHeader } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 
 const LogIn = () => {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [modal, setModal] = useState(false)
   const signIn = useSignIn()
   const navigate = useNavigate()
 
@@ -42,11 +45,11 @@ const LogIn = () => {
         },
       });
 
-      alert("Вы вошли в аккаунт... Переходим на главную страницу...")
+      setModal(true)
 
       setTimeout(() => {
         navigate('/')
-      }, 1000)
+      }, 2500)
 
     } catch (err: any) {
       console.log(err)
@@ -55,7 +58,10 @@ const LogIn = () => {
         setError("Ошибка, неправильный логин/пароль.")
       }
       else if (err == "Error: AxiosError: timeout of 10000ms exceeded") {
-        setError("Превышено время ожидания запроса от сервера.")
+        setError("Превышено время ожидания ответа от сервера.")
+      }
+      else if (err == "Error: AxiosError: Network Error") {
+        setError("Ошибка соединения с сервером.")
       }
       else {
         setError(`Ошибка, ${err}`)
@@ -78,6 +84,16 @@ const LogIn = () => {
 
   return (
     <div className='w-full relative flex justify-center mt-12'>
+
+      <Dialog open={modal} onOpenChange={setModal}>
+        <DialogContent className="sm:max-w-[425px] h-[20vh] flex items-center justify-center text-black">
+          <DialogHeader className='flex flex-col gap-4'>
+            <DialogTitle className='text-black text-center text-2xl'>Вы успешно вошли в аккаунт.</DialogTitle>
+            <DialogDescription className='text-black text-center'>Перенаправляем вас на главную страницу...</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
       <form
         onSubmit={formik.handleSubmit}
         className='bg-black w-[98%] sm:w-[90%] xl:w-[55%] py-16 rounded-xl flex flex-col items-center gap-12 relative'

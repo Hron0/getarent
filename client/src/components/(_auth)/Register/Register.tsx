@@ -7,19 +7,21 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineLoading } from "react-icons/ai";
 import logo from "../../../assets/logo.svg"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { DialogDescription } from '@radix-ui/react-dialog'
 
-/* TODO replace dumb alert with shadCN Dialog */
 
 const Register = () => {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [modal, setModal] = useState(false)
   const navigate = useNavigate()
 
   const onSubmit = async (values: any) => {
     console.log("Values - ", values)
     setError("")
     if (values.password < 5) {
-      setError("Пароль должен быть длинне 5 символов")
+      setError("Пароль должен быть длиннее 5 символов")
     } else {
       try {
         setLoading(true)
@@ -34,11 +36,11 @@ const Register = () => {
 
         console.log(response)
 
-        alert("Вы зарегестрировались, теперь войдите в свой аккаунт...")
+        setModal(true)
 
         setTimeout(() => {
           navigate('/login')
-        }, 1000)
+        }, 2500)
 
       } catch (err: any) {
         console.log(err)
@@ -72,6 +74,16 @@ const Register = () => {
 
   return (
     <div className='w-full relative flex justify-center mt-12'>
+
+      <Dialog open={modal} onOpenChange={setModal}>
+        <DialogContent className="sm:max-w-[425px] h-[20vh] flex items-center justify-center text-black">
+          <DialogHeader className='flex flex-col gap-4'>
+            <DialogTitle className='text-black text-center text-2xl'>Вы успешно зарегестрировались, теперь войдите в аккаунт.</DialogTitle>
+            <DialogDescription className='text-black text-center'>Перенаправляем вас на страницу входа...</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
       <form
         onSubmit={formik.handleSubmit}
         className='bg-black w-[98%] sm:w-[90%] xl:w-[55%] py-16 rounded-xl flex flex-col items-center gap-10 relative'
