@@ -8,6 +8,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineLoading } from "react-icons/ai";
 import logo from "../../../assets/logo.svg"
 
+/* TODO replace dumb alert with shadCN Dialog */
+
 const Register = () => {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -23,10 +25,13 @@ const Register = () => {
         setLoading(true)
 
         const response = await axios.post(
-          "http://localhost:1337/api/auth/local/register", values
-        )
+          "http://localhost:1337/api/auth/local/register", values, { timeout: 10000 }
+        ).then(response => {
+          return response
+        }).catch(error => {
+          throw new Error(error);
+        })
 
-        setLoading(false)
         console.log(response)
 
         alert("Вы зарегестрировались, теперь войдите в свой аккаунт...")
@@ -37,11 +42,18 @@ const Register = () => {
 
       } catch (err: any) {
         console.log(err)
-        {
-          err.response.status == 400
-            ? setError("Ошибка, пользователь уже существует")
-            : setError(`Ошибка, ${err.message}`)
+
+        if (err == "Error: AxiosError: Request failed with status code 400") {
+          setError("Ошибка, пользователь уже существует.")
         }
+        else if (err == "Error: AxiosError: timeout of 10000ms exceeded") {
+          setError("Превышено время ожидания запроса от сервера.")
+        }
+        else {
+          setError(`Ошибка, ${err}`)
+        }
+
+      } finally {
         setLoading(false)
       }
     }

@@ -13,7 +13,7 @@ import NavModal from "./navMenu/NavModal";
 /* TODO add shadCN AspectRaiot component on first image */
 
 const Navbar = () => {
-  const [modal, setModal] = useState(true)
+  const [modal, setModal] = useState(false)
   const { width } = useWindowDimensions()
   const isAuthenticated = useIsAuthenticated()
   let mobile: boolean = width < 770

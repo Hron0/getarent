@@ -5,7 +5,7 @@ import { Label } from "@radix-ui/react-label"
 
 interface ModalProps {
     active: Boolean;
-    setActive?: Function;
+    setActive: Function;
   }
 
 const NavModal = ({ active, setActive }: ModalProps) => {

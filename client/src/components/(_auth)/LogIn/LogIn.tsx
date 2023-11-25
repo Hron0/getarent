@@ -18,46 +18,53 @@ const LogIn = () => {
   const onSubmit = async (values: any) => {
     console.log("Values - ", values)
     setError("")
-    if (values.password < 5) {
-      setError("Пароль должен быть длинне 5 символов")
-    } else {
-      try {
-        setLoading(true)
 
-        const response = await axios.post(
-          "http://localhost:1337/api/auth/local", values
-        )
+    try {
+      setLoading(true)
 
-        setLoading(false)
-        console.log(response)
+      const response = await axios.post(
+        "http://localhost:1337/api/auth/local", values, { timeout: 10000 }
+      ).then(response => {
+        return response
+      }).catch(error => {
+        throw new Error(error);
+      })
 
-        signIn({
-          token: response.data.jwt,
-          expiresIn: 3600,
-          tokenType: "Bearer",
-          authState: { 
-            email: response.data.user.email,
-            name: response.data.user.username,
-           },
-        });
+      console.log(response)
 
-        alert("Вы вошли в аккаунт... Переходим на главную страницу...")
+      signIn({
+        token: response.data.jwt,
+        expiresIn: 3600,
+        tokenType: "Bearer",
+        authState: {
+          email: response.data.user.email,
+          name: response.data.user.username,
+        },
+      });
 
-        setTimeout(() => {
-          navigate('/')
-        }, 1000)
+      alert("Вы вошли в аккаунт... Переходим на главную страницу...")
 
-      } catch (err: any) {
-        console.log(err.response.status)
-        {
-          err.response.status == 400
-          ? setError("Ошибка, неправильный логин/пароль.")
-          : setError(`Ошибка, ${err.message}`)
-        }
-        setLoading(false)
+      setTimeout(() => {
+        navigate('/')
+      }, 1000)
+
+    } catch (err: any) {
+      console.log(err)
+
+      if (err == "Error: AxiosError: Request failed with status code 400") {
+        setError("Ошибка, неправильный логин/пароль.")
       }
+      else if (err == "Error: AxiosError: timeout of 10000ms exceeded") {
+        setError("Превышено время ожидания запроса от сервера.")
+      }
+      else {
+        setError(`Ошибка, ${err}`)
+      }
+
+    } finally {
+      setLoading(false)
     }
-    console.log(error)
+
 
   }
 
